@@ -5,7 +5,6 @@ import { defineConfig } from "vitest/config";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
-  base: "/podstr.org/",
   server: {
     host: "::",
     port: 8080,

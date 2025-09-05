@@ -59,13 +59,13 @@ export default {
         let resolvedManifestPath;
         
         if (manifestPath.startsWith('/')) {
-          // Absolute path - check in public directory first, then project root
-          const publicPath = path.resolve(htmlDir, 'public' + manifestPath);
-          const rootPath = path.resolve(htmlDir, '.' + manifestPath);
-          resolvedManifestPath = fs.existsSync(publicPath) ? publicPath : rootPath;
+          // Absolute path - check in public directory (where Vite serves static assets from)
+          resolvedManifestPath = path.resolve(htmlDir, 'public' + manifestPath);
         } else {
-          // Relative path
-          resolvedManifestPath = path.resolve(htmlDir, manifestPath);
+          // Relative path - check in same directory first, then in public directory
+          const sameDirPath = path.resolve(htmlDir, manifestPath);
+          const publicPath = path.resolve(htmlDir, 'public', manifestPath.replace('./', ''));
+          resolvedManifestPath = fs.existsSync(sameDirPath) ? sameDirPath : publicPath;
         }
         
         // Check if the manifest file exists

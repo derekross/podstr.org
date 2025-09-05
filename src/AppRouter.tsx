@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound";
 
 export function AppRouter() {
   return (
-    <BrowserRouter basename="/podstr.org">
+    <BrowserRouter>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Index />} />
