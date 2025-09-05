@@ -78,7 +78,7 @@ const Index = () => {
                 </a>
               </Button>
               <Button variant="outline" size="lg" className="text-lg px-8 py-3" asChild>
-                <a href="https://github.com/podstr/podstr" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/derekross/podstr" target="_blank" rel="noopener noreferrer">
                   <Github className="mr-2 h-5 w-5" />
                   View on GitHub
                 </a>
@@ -156,7 +156,7 @@ const Index = () => {
               <p className="text-gray-400">Community-powered podcast platform</p>
             </div>
             <div className="flex space-x-6">
-              <a href="https://github.com/podstr/podstr" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://github.com/derekross/podstr" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Github className="h-6 w-6" />
               </a>
               <a href="/guide" className="text-gray-400 hover:text-white transition-colors">
