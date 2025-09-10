@@ -1,8 +1,9 @@
 import { useSeoMeta } from '@unhead/react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download, Settings, Rocket, CheckCircle, AlertCircle, Copy, BookOpen, Github, MessageSquare } from 'lucide-react';
+import { Download, Settings, Rocket, CheckCircle, AlertCircle, Copy, BookOpen, Github, MessageSquare, Users, Shield, Zap, Play, Terminal } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Navigation } from '@/components/Navigation';
 import { useState } from 'react';
@@ -51,17 +52,17 @@ const Guide = () => {
           <p>First, clone the Podstr repository from GitHub:</p>
           <div className="relative">
             <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto whitespace-pre-wrap break-words">
-              <code>git clone https://github.com/podstr/podstr.git</code>
+              <code>git clone https://github.com/derekross/podstr.git</code>
             </pre>
             <Button
               variant="ghost"
               size="sm"
               className="absolute top-2 right-2 text-gray-400 hover:text-white"
-              onClick={() => copyToClipboard('git clone https://github.com/podstr/podstr.git')}
+              onClick={() => copyToClipboard('git clone https://github.com/derekross/podstr.git')}
             >
               <Copy className="h-4 w-4" />
             </Button>
-            {copiedCommand === 'git clone https://github.com/podstr/podstr.git' && (
+            {copiedCommand === 'git clone https://github.com/derekross/podstr.git' && (
               <span className="absolute top-2 right-12 text-green-400 text-sm">Copied!</span>
             )}
           </div>
@@ -394,25 +395,76 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-purple-900/20 dark:to-gray-800">
       <Navigation title="Installation Guide" />
+
+      {/* Hero Section */}
+      <section className="py-16 bg-gradient-to-r from-purple-600/10 to-blue-600/10 dark:from-purple-400/10 dark:to-blue-400/10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+              <Terminal className="h-8 w-8 text-white" />
+            </div>
+          </div>
+          <Badge variant="secondary" className="mb-4">Setup Guide</Badge>
+          <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            Build Your Podcast Community
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+            Follow our step-by-step guide to deploy your own decentralized podcast platform. Get up and running in about 15 minutes.
+          </p>
+          <div className="flex justify-center space-x-8 text-sm text-gray-600 dark:text-gray-400">
+            <div className="flex items-center">
+              <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+              15 minute setup
+            </div>
+            <div className="flex items-center">
+              <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+              No technical expertise required
+            </div>
+            <div className="flex items-center">
+              <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+              Deploy anywhere
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-16 bg-white dark:bg-gray-800">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+            What You'll Build
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <Users className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Your Own Community</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">A dedicated space for your audience that you fully control</p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <Zap className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Lightning Payments</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">Direct Bitcoin payments from listeners with zero fees</p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <Shield className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Censorship Resistant</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">Built on Nostr - no one can silence your voice</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Guide Content */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                <BookOpen className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-              </div>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Complete Setup Guide
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
-              Follow these step-by-step instructions to get your Podstr instance up and running.
-            </p>
-          </div>
 
           <Tabs defaultValue="installation" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
@@ -523,26 +575,75 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
 
           {/* Next Steps */}
           <div className="mt-16 text-center">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Ready to Launch?
-            </h3>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-              Once you've completed the setup, you'll have a fully functional podcast community platform with permissionless Bitcoin payments and Zaps.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
-                <a href="https://github.com/podstr/podstr" target="_blank" rel="noopener noreferrer">
-                  <Github className="mr-2 h-5 w-5" />
-                  Get the Code
-                </a>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/faq">
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  Need Help?
-                </Link>
-              </Button>
-            </div>
+            <Card className="border-2 border-dashed border-purple-200 dark:border-purple-700 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20">
+              <CardContent className="py-12">
+                <div className="flex justify-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                    <Rocket className="h-8 w-8 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                  Ready to Launch Your Community?
+                </h3>
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+                  Once you've completed the setup, you'll have a fully functional podcast community platform with direct Lightning payments and true ownership.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+                  <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" asChild>
+                    <a href="https://github.com/derekross/podstr" target="_blank" rel="noopener noreferrer">
+                      <Play className="mr-2 h-5 w-5" />
+                      Get Started Now
+                    </a>
+                  </Button>
+                  <Button variant="outline" size="lg" className="border-2" asChild>
+                    <Link to="/faq">
+                      <MessageSquare className="mr-2 h-5 w-5" />
+                      Need Help?
+                    </Link>
+                  </Button>
+                </div>
+                <div className="flex justify-center space-x-8 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center">
+                    <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                    Free & open source
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                    Deploy anywhere
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                    Full ownership
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Community Call-to-Action */}
+      <section className="py-16 bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-800 dark:to-blue-800">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">
+            Join the Community of Independent Podcasters
+          </h2>
+          <p className="text-xl text-purple-100 mb-8">
+            Connect with other podcasters who are building their communities on decentralized infrastructure.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" variant="secondary" className="bg-white text-purple-600 hover:bg-gray-100" asChild>
+              <a href="https://github.com/derekross/podstr" target="_blank" rel="noopener noreferrer">
+                <Github className="mr-2 h-5 w-5" />
+                View on GitHub
+              </a>
+            </Button>
+            <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" asChild>
+              <Link to="/faq">
+                <BookOpen className="mr-2 h-5 w-5" />
+                Read the FAQ
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -556,7 +657,7 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
               <p className="text-gray-400">Community-powered podcast platform</p>
             </div>
             <div className="flex space-x-6">
-              <a href="https://github.com/podstr/podstr" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://github.com/derekross/podstr" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Github className="h-6 w-6" />
               </a>
               <a href="/guide" className="text-gray-400 hover:text-white transition-colors">

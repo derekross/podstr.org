@@ -96,7 +96,7 @@ export function Navigation({ title, showBackButton = true }: NavigationProps) {
               title="View on GitHub"
             >
               <a
-                href="https://github.com/podstr/podstr"
+                href="https://github.com/derekross/podstr"
                 target="_blank"
                 rel="noopener noreferrer"
               >
