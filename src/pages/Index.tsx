@@ -77,21 +77,21 @@ const Index = () => {
 
   const showcaseFeatures = [
     {
-      title: 'Community Dashboard',
-      description: 'Get insights into your audience engagement, episode performance, and community growth with comprehensive analytics.',
-      image: '📊', // Placeholder for actual screenshot
-      benefits: ['Audience insights', 'Growth metrics', 'Engagement tracking']
+      title: 'Cross-Platform Publishing',
+      description: 'Publish once to Nostr and automatically distribute your podcast to all major platforms and RSS feeds simultaneously.',
+      image: '/cross-platform-publishing.png',
+      benefits: ['Multi-platform distribution', 'RSS feed generation', 'Decentralized hosting']
     },
     {
       title: 'Direct Listener Payments',
       description: 'Receive Bitcoin Lightning payments directly from listeners. Support value-for-value podcasting with streaming sats.',
-      image: '⚡', // Placeholder for actual screenshot
+      image: '/direct-payments.png',
       benefits: ['Lightning payments', 'Streaming sats', 'No payment processors']
     },
     {
       title: 'Interactive Comments',
       description: 'Build deeper connections with threaded comments, reactions, and real-time discussions on every episode.',
-      image: '💬', // Placeholder for actual screenshot
+      image: '/interactive-comments.png',
       benefits: ['Threaded discussions', 'Real-time updates', 'Community moderation']
     }
   ];
@@ -296,10 +296,20 @@ const Index = () => {
                   </div>
                 </div>
                 <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''} relative`}>
-                  <Card className="p-12 text-center bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 border-2 border-dashed border-purple-200 dark:border-purple-700">
-                    <div className="text-6xl mb-4">{feature.image}</div>
-                    <p className="text-gray-600 dark:text-gray-400">Screenshot placeholder</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">Feature demonstration coming soon</p>
+                  <Card className="p-4 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 border-2 border-purple-200 dark:border-purple-700">
+                    {feature.image.startsWith('/') ? (
+                      <img 
+                        src={feature.image} 
+                        alt={`${feature.title} screenshot`}
+                        className="w-full h-auto rounded-lg shadow-lg"
+                      />
+                    ) : (
+                      <div className="p-8 text-center">
+                        <div className="text-6xl mb-4">{feature.image}</div>
+                        <p className="text-gray-600 dark:text-gray-400">Screenshot placeholder</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">Feature demonstration coming soon</p>
+                      </div>
+                    )}
                   </Card>
                 </div>
               </div>
