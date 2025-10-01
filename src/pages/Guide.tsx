@@ -534,6 +534,38 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
                       <CardDescription>{option.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
+                      {/* Deploy Button for Vercel */}
+                      {option.title === 'Vercel (Recommended)' && (
+                        <div className="flex justify-center pb-2">
+                          <a
+                            href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              src="https://vercel.com/button"
+                              alt="Deploy with Vercel"
+                              className="h-10"
+                            />
+                          </a>
+                        </div>
+                      )}
+                      {/* Deploy Button for Netlify */}
+                      {option.title === 'Netlify' && (
+                        <div className="flex justify-center pb-2">
+                          <a
+                            href="https://app.netlify.com/start/deploy?repository=https://github.com/derekross/podstr"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              src="https://www.netlify.com/img/deploy/button.svg"
+                              alt="Deploy to Netlify"
+                              className="h-10"
+                            />
+                          </a>
+                        </div>
+                      )}
                       <div>
                         <h4 className="font-medium mb-2">Steps:</h4>
                         <ol className="list-decimal list-inside space-y-1 text-sm text-gray-600 dark:text-gray-300">
