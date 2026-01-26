@@ -27,21 +27,21 @@ const Guide = () => {
 
   const shakespeareSteps = [
     {
-      title: 'Fork the Repository',
+      title: 'Fork the Repository (Optional)',
       content: (
         <div className="space-y-4">
-          <p>First, fork the Podstr repository to your GitHub account:</p>
+          <p>You can optionally fork the Podstr repository to your GitHub account first:</p>
           <div className="flex justify-center">
-            <Button size="lg" asChild>
+            <Button size="lg" variant="outline" asChild>
               <a href="https://github.com/derekross/podstr/fork" target="_blank" rel="noopener noreferrer">
                 <Github className="mr-2 h-5 w-5" />
-                Fork on GitHub
+                Fork on GitHub (Optional)
               </a>
             </Button>
           </div>
           <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
             <p className="text-sm text-blue-800 dark:text-blue-200">
-              <strong>Tip:</strong> Make sure you're logged into GitHub before forking. This creates your own copy of Podstr that you can customize.
+              <strong>Note:</strong> Forking is optional! Shakespeare.diy will automatically clone the repository for you when you open it. You can fork later if you want your own GitHub copy.
             </p>
           </div>
         </div>
@@ -70,19 +70,19 @@ const Guide = () => {
       title: 'Open in Shakespeare.diy',
       content: (
         <div className="space-y-4">
-          <p>Open your forked repository in Shakespeare.diy:</p>
+          <p>Open Podstr in Shakespeare.diy - it will automatically clone the repository for you:</p>
           <div className="flex justify-center">
-            <Button size="lg" variant="outline" asChild>
+            <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" asChild>
               <a href="https://shakespeare.diy/clone?url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr.git" target="_blank" rel="noopener noreferrer">
                 <Sparkles className="mr-2 h-5 w-5" />
-                Open in Shakespeare
+                Edit with Shakespeare
               </a>
             </Button>
           </div>
           <ol className="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-300 mt-4">
-            <li>Click the button above to open Podstr in Shakespeare</li>
+            <li>Click the button above - Shakespeare will automatically clone Podstr</li>
             <li>Connect your GitHub account if prompted</li>
-            <li>Make sure you're on the <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">podstr-2.0</code> branch</li>
+            <li>You're ready to paste your prompt!</li>
           </ol>
         </div>
       )
@@ -150,16 +150,16 @@ const Guide = () => {
               <span className="absolute top-2 right-12 text-green-400 text-sm">Copied!</span>
             )}
           </div>
-          <p>Navigate into the project and checkout the 2.0 branch:</p>
+          <p>Navigate into the project:</p>
           <div className="relative">
             <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto whitespace-pre-wrap break-words">
-              <code>cd podstr && git checkout podstr-2.0</code>
+              <code>cd podstr</code>
             </pre>
             <Button
               variant="ghost"
               size="sm"
               className="absolute top-2 right-2 text-gray-400 hover:text-white"
-              onClick={() => copyToClipboard('cd podstr && git checkout podstr-2.0')}
+              onClick={() => copyToClipboard('cd podstr')}
             >
               <Copy className="h-4 w-4" />
             </Button>
@@ -449,7 +449,7 @@ const Guide = () => {
                       {option.title === 'Vercel (Recommended)' && (
                         <div className="flex justify-center pb-2">
                           <a
-                            href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr&branch=podstr-2.0"
+                            href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -465,7 +465,7 @@ const Guide = () => {
                       {option.title === 'Netlify' && (
                         <div className="flex justify-center pb-2">
                           <a
-                            href="https://app.netlify.com/start/deploy?repository=https://github.com/derekross/podstr#podstr-2.0"
+                            href="https://app.netlify.com/start/deploy?repository=https://github.com/derekross/podstr"
                             target="_blank"
                             rel="noopener noreferrer"
                           >

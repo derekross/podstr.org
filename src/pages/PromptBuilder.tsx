@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 
 interface FormData {
-  // Creator Identity
+  // Podcast Identity
   creatorNpub: string;
   
   // Basic Info
@@ -104,7 +104,7 @@ const defaultFormData: FormData = {
 };
 
 const steps = [
-  { id: 'identity', title: 'Creator Identity', icon: User, description: 'Your Nostr identity' },
+  { id: 'identity', title: 'Podcast Identity', icon: User, description: 'Your Nostr identity' },
   { id: 'basic', title: 'Basic Info', icon: Mic, description: 'Podcast details' },
   { id: 'podcasting2', title: 'Podcasting 2.0', icon: Settings, description: 'Advanced settings' },
   { id: 'monetization', title: 'Monetization', icon: Zap, description: 'Lightning payments' },
@@ -726,8 +726,7 @@ const PromptBuilder = () => {
                 Next Steps
               </h4>
               <ol className="list-decimal list-inside space-y-1 text-sm text-purple-700 dark:text-purple-300">
-                <li>Fork the <a href="https://github.com/derekross/podstr" target="_blank" rel="noopener noreferrer" className="underline">Podstr repository</a> on GitHub</li>
-                <li>Click "Open in Shakespeare" above to open your fork</li>
+                <li>Click "Open in Shakespeare" above - it will automatically clone Podstr</li>
                 <li>Paste the copied prompt</li>
                 <li>Shakespeare will configure your podcast automatically!</li>
                 <li>Deploy to Vercel, Netlify, or GitHub Pages</li>
