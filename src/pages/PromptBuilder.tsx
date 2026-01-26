@@ -917,7 +917,7 @@ const PromptBuilder = () => {
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button onClick={copyPrompt} className="flex-1" size="lg">
                 {copied ? (
                   <>
@@ -931,7 +931,7 @@ const PromptBuilder = () => {
                   </>
                 )}
               </Button>
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="outline" size="lg" className="w-full sm:w-auto" asChild>
                 <a
                   href="https://shakespeare.diy/clone?url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr.git"
                   target="_blank"
