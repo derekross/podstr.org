@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { useTheme } from '@/hooks/useTheme';
-import { ArrowLeft, BookOpen, Github, MessageSquare, Moon, Sun, Monitor, Sparkles, Wand2 } from 'lucide-react';
+import { ArrowLeft, BookOpen, Github, MessageSquare, Sparkles, Wand2 } from 'lucide-react';
 
 interface NavigationProps {
   title: string;
@@ -10,27 +9,6 @@ interface NavigationProps {
 
 export function Navigation({ title, showBackButton = true }: NavigationProps) {
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
-
-  const toggleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-    } else if (theme === 'dark') {
-      setTheme('system');
-    } else {
-      setTheme('light');
-    }
-  };
-
-  const getThemeIcon = () => {
-    if (theme === 'light') {
-      return <Sun className="h-4 w-4" />;
-    } else if (theme === 'dark') {
-      return <Moon className="h-4 w-4" />;
-    } else {
-      return <Monitor className="h-4 w-4" />;
-    }
-  };
 
   const isHomePage = location.pathname === '/';
 
@@ -55,17 +33,6 @@ export function Navigation({ title, showBackButton = true }: NavigationProps) {
 
           {/* Right side - Navigation Links */}
           <div className="flex flex-wrap gap-2 justify-center sm:justify-end w-full sm:w-auto">
-            {/* Theme Toggle - Always visible */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={toggleTheme}
-              title="Toggle theme"
-              className="flex-shrink-0"
-            >
-              {getThemeIcon()}
-            </Button>
-
             {/* Navigation Links - Hide on mobile for some items */}
             {!isHomePage && (
               <>
