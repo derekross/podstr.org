@@ -104,7 +104,7 @@ const defaultFormData: FormData = {
 };
 
 const steps = [
-  { id: 'identity', title: 'Podcast Identity', icon: User, description: 'Your Nostr identity' },
+  { id: 'identity', title: 'Identity', icon: User, description: 'Your Nostr identity' },
   { id: 'basic', title: 'Basic Info', icon: Mic, description: 'Podcast details' },
   { id: 'podcasting2', title: 'Podcasting 2.0', icon: Settings, description: 'Advanced settings' },
   { id: 'monetization', title: 'Monetization', icon: Zap, description: 'Lightning payments' },
@@ -763,7 +763,7 @@ const PromptBuilder = () => {
       {/* Progress Steps */}
       <section className="py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-8 overflow-x-auto pb-2">
+          <div className="flex justify-between items-center mb-8 overflow-x-auto py-2">
             {steps.map((step, index) => {
               const Icon = step.icon;
               const isActive = index === currentStep;
