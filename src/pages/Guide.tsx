@@ -246,7 +246,20 @@ const Guide = () => {
 
   const deploymentOptions = [
     {
-      title: 'Vercel (Recommended)',
+      title: 'Shakespeare Deploy (Recommended)',
+      icon: '🎭',
+      description: 'One-click deploy to yourpodcast.shakespeare.wtf',
+      steps: [
+        'Configure your podcast with Shakespeare.diy',
+        'Click "Deploy" in Shakespeare',
+        'Choose your subdomain',
+        'Your site is live instantly!'
+      ],
+      command: '',
+      notes: 'The easiest way to deploy - no external accounts needed'
+    },
+    {
+      title: 'Vercel',
       icon: '🚀',
       description: 'Easy deployment with automatic SSL and CDN',
       steps: [
@@ -282,19 +295,6 @@ const Guide = () => {
       ],
       command: 'npm run build',
       notes: 'Perfect for free hosting with GitHub integration'
-    },
-    {
-      title: 'Self-Hosted',
-      icon: '🏠',
-      description: 'Full control over your deployment and infrastructure',
-      steps: [
-        'Set up a server with Node.js',
-        'Clone your repository',
-        'Run npm run build',
-        'Serve the dist folder with nginx or similar'
-      ],
-      command: 'npm run build',
-      notes: 'Maximum control but requires more technical knowledge'
     }
   ];
 
@@ -445,8 +445,23 @@ const Guide = () => {
                       <CardDescription>{option.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
+                      {/* Deploy Button for Shakespeare */}
+                      {option.title === 'Shakespeare Deploy (Recommended)' && (
+                        <div className="flex justify-center pb-2">
+                          <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" asChild>
+                            <a
+                              href="https://shakespeare.diy/clone?url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr.git"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Sparkles className="mr-2 h-5 w-5" />
+                              Open in Shakespeare
+                            </a>
+                          </Button>
+                        </div>
+                      )}
                       {/* Deploy Button for Vercel */}
-                      {option.title === 'Vercel (Recommended)' && (
+                      {option.title === 'Vercel' && (
                         <div className="flex justify-center pb-2">
                           <a
                             href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr"
@@ -485,25 +500,27 @@ const Guide = () => {
                           ))}
                         </ol>
                       </div>
-                      <div>
-                        <h4 className="font-medium mb-2">Build Command:</h4>
-                        <div className="relative">
-                          <pre className="bg-gray-900 text-gray-100 p-3 rounded-lg text-sm overflow-x-auto whitespace-pre-wrap break-words">
-                            <code>{option.command}</code>
-                          </pre>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="absolute top-2 right-2 text-gray-400 hover:text-white"
-                            onClick={() => copyToClipboard(option.command)}
-                          >
-                            <Copy className="h-4 w-4" />
-                          </Button>
-                          {copiedCommand === option.command && (
-                            <span className="absolute top-2 right-12 text-green-400 text-sm">Copied!</span>
-                          )}
+                      {option.command && (
+                        <div>
+                          <h4 className="font-medium mb-2">Build Command:</h4>
+                          <div className="relative">
+                            <pre className="bg-gray-900 text-gray-100 p-3 rounded-lg text-sm overflow-x-auto whitespace-pre-wrap break-words">
+                              <code>{option.command}</code>
+                            </pre>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="absolute top-2 right-2 text-gray-400 hover:text-white"
+                              onClick={() => copyToClipboard(option.command)}
+                            >
+                              <Copy className="h-4 w-4" />
+                            </Button>
+                            {copiedCommand === option.command && (
+                              <span className="absolute top-2 right-12 text-green-400 text-sm">Copied!</span>
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      )}
                       <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
                         <p className="text-sm text-blue-800 dark:text-blue-200">
                           <strong>Note:</strong> {option.notes}
