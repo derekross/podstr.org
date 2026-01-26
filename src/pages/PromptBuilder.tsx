@@ -917,8 +917,8 @@ const PromptBuilder = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-2">
-              <Button onClick={copyPrompt} className="flex-1" size="lg">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <Button onClick={copyPrompt} size="lg">
                 {copied ? (
                   <>
                     <CheckCircle className="mr-2 h-5 w-5" />
@@ -931,7 +931,7 @@ const PromptBuilder = () => {
                   </>
                 )}
               </Button>
-              <Button variant="outline" size="lg" className="w-full sm:w-auto" asChild>
+              <Button variant="outline" size="lg" asChild>
                 <a
                   href="https://shakespeare.diy/clone?url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr.git"
                   target="_blank"
