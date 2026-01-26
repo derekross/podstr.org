@@ -22,7 +22,25 @@ import {
   Globe,
   Users,
   ExternalLink,
+  Plus,
+  Trash2,
 } from 'lucide-react';
+
+interface ValueRecipient {
+  name: string;
+  type: 'lnaddress' | 'node';
+  address: string;
+  split: number;
+  fee: boolean;
+}
+
+interface PodcastPerson {
+  name: string;
+  role: string;
+  group: 'cast' | 'crew';
+  img?: string;
+  href?: string;
+}
 
 interface FormData {
   // Podcast Identity
@@ -60,11 +78,11 @@ interface FormData {
   // Value
   valueAmount: string;
   valueCurrency: string;
-  valueRecipients: string;
+  recipients: ValueRecipient[];
   
   // Funding & People
   funding: string;
-  person: string;
+  people: PodcastPerson[];
   
   // RSS & Analytics
   rssTtl: string;
@@ -96,9 +114,9 @@ const defaultFormData: FormData = {
   licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
   valueAmount: '1000',
   valueCurrency: 'sats',
-  valueRecipients: '',
+  recipients: [{ name: '', type: 'lnaddress', address: '', split: 100, fee: false }],
   funding: '/about',
-  person: '',
+  people: [{ name: '', role: 'host', group: 'cast' }],
   rssTtl: '60',
   useOP3: false,
 };
@@ -203,23 +221,22 @@ const PromptBuilder = () => {
     ];
 
     // Add value recipients
-    if (formData.valueRecipients) {
+    const validRecipients = formData.recipients.filter(r => r.name && r.address);
+    if (validRecipients.length > 0) {
       lines.push(`- Value recipients (JSON array):`);
       lines.push('```json');
-      lines.push(formData.valueRecipients);
+      lines.push(JSON.stringify(validRecipients, null, 2));
       lines.push('```');
     } else {
       lines.push(`- Value recipients (JSON array):`);
       lines.push('```json');
-      lines.push(`[
-  {
-    "name": "${formData.author || 'Host'}",
-    "type": "lnaddress",
-    "address": "${formData.email ? formData.email.replace('@', '@') : 'you@getalby.com'}",
-    "split": 100,
-    "fee": false
-  }
-]`);
+      lines.push(JSON.stringify([{
+        name: formData.author || 'Host',
+        type: 'lnaddress',
+        address: formData.email || 'you@getalby.com',
+        split: 100,
+        fee: false
+      }], null, 2));
       lines.push('```');
     }
 
@@ -229,21 +246,20 @@ const PromptBuilder = () => {
     lines.push('');
     lines.push('**PODCAST PEOPLE**');
     
-    if (formData.person) {
+    const validPeople = formData.people.filter(p => p.name);
+    if (validPeople.length > 0) {
       lines.push(`- People involved (JSON array):`);
       lines.push('```json');
-      lines.push(formData.person);
+      lines.push(JSON.stringify(validPeople, null, 2));
       lines.push('```');
     } else {
       lines.push(`- People involved (JSON array):`);
       lines.push('```json');
-      lines.push(`[
-  {
-    "name": "${formData.author || 'Host Name'}",
-    "role": "host",
-    "group": "cast"
-  }
-]`);
+      lines.push(JSON.stringify([{
+        name: formData.author || 'Host Name',
+        role: 'host',
+        group: 'cast'
+      }], null, 2));
       lines.push('```');
     }
 
@@ -529,28 +545,136 @@ const PromptBuilder = () => {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="valueRecipients">Value Recipients (JSON - optional)</Label>
-              <Textarea
-                id="valueRecipients"
-                placeholder={`Leave blank for a simple setup, or paste a JSON array like:
-[
-  {
-    "name": "Host",
-    "type": "lnaddress",
-    "address": "you@getalby.com",
-    "split": 100,
-    "fee": false
-  }
-]`}
-                value={formData.valueRecipients}
-                onChange={(e) => updateField('valueRecipients', e.target.value)}
-                rows={8}
-                className="font-mono text-sm"
-              />
-              <p className="text-sm text-muted-foreground">
-                For multiple recipients, the splits must add up to 100. Leave blank for a simple single-recipient setup.
-              </p>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <Label>Payment Recipients</Label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setFormData(prev => ({
+                      ...prev,
+                      recipients: [...prev.recipients, { name: '', type: 'lnaddress', address: '', split: 0, fee: false }]
+                    }));
+                  }}
+                >
+                  <Plus className="h-4 w-4 mr-1" />
+                  Add Recipient
+                </Button>
+              </div>
+              
+              {formData.recipients.map((recipient, index) => (
+                <div key={index} className="border rounded-lg p-4 space-y-3 bg-gray-50 dark:bg-gray-800/50">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Recipient {index + 1}</span>
+                    {formData.recipients.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            recipients: prev.recipients.filter((_, i) => i !== index)
+                          }));
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                  
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <div className="space-y-1">
+                      <Label className="text-xs">Name</Label>
+                      <Input
+                        placeholder="Host name"
+                        value={recipient.name}
+                        onChange={(e) => {
+                          const newRecipients = [...formData.recipients];
+                          newRecipients[index] = { ...recipient, name: e.target.value };
+                          setFormData(prev => ({ ...prev, recipients: newRecipients }));
+                        }}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs">Type</Label>
+                      <Select
+                        value={recipient.type}
+                        onValueChange={(v: 'lnaddress' | 'node') => {
+                          const newRecipients = [...formData.recipients];
+                          newRecipients[index] = { ...recipient, type: v };
+                          setFormData(prev => ({ ...prev, recipients: newRecipients }));
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="lnaddress">Lightning Address</SelectItem>
+                          <SelectItem value="node">Node Pubkey</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <div className="space-y-1">
+                      <Label className="text-xs">{recipient.type === 'lnaddress' ? 'Lightning Address' : 'Node Pubkey'}</Label>
+                      <Input
+                        placeholder={recipient.type === 'lnaddress' ? 'you@getalby.com' : '03abc...'}
+                        value={recipient.address}
+                        onChange={(e) => {
+                          const newRecipients = [...formData.recipients];
+                          newRecipients[index] = { ...recipient, address: e.target.value };
+                          setFormData(prev => ({ ...prev, recipients: newRecipients }));
+                        }}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs">Split %</Label>
+                      <Input
+                        type="number"
+                        min="0"
+                        max="100"
+                        placeholder="100"
+                        value={recipient.split || ''}
+                        onChange={(e) => {
+                          const newRecipients = [...formData.recipients];
+                          newRecipients[index] = { ...recipient, split: parseInt(e.target.value) || 0 };
+                          setFormData(prev => ({ ...prev, recipients: newRecipients }));
+                        }}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      checked={recipient.fee}
+                      onCheckedChange={(v) => {
+                        const newRecipients = [...formData.recipients];
+                        newRecipients[index] = { ...recipient, fee: v };
+                        setFormData(prev => ({ ...prev, recipients: newRecipients }));
+                      }}
+                    />
+                    <Label className="text-xs">Deduct fees from this recipient</Label>
+                  </div>
+                </div>
+              ))}
+              
+              {(() => {
+                const totalSplit = formData.recipients.reduce((sum, r) => sum + (r.split || 0), 0);
+                if (totalSplit !== 100 && formData.recipients.some(r => r.name || r.address)) {
+                  return (
+                    <p className="text-sm text-amber-600 dark:text-amber-400">
+                      Total split is {totalSplit}% (should be 100%)
+                    </p>
+                  );
+                }
+                return null;
+              })()}
             </div>
 
             <div className="space-y-2">
@@ -619,25 +743,131 @@ const PromptBuilder = () => {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="person">Podcast People (JSON - optional)</Label>
-              <Textarea
-                id="person"
-                placeholder={`Leave blank for a simple host setup, or paste a JSON array like:
-[
-  {
-    "name": "Your Name",
-    "role": "host",
-    "group": "cast",
-    "img": "https://your-photo.jpg",
-    "href": "https://your-website.com"
-  }
-]`}
-                value={formData.person}
-                onChange={(e) => updateField('person', e.target.value)}
-                rows={8}
-                className="font-mono text-sm"
-              />
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <Label>Podcast People</Label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setFormData(prev => ({
+                      ...prev,
+                      people: [...prev.people, { name: '', role: 'guest', group: 'cast' }]
+                    }));
+                  }}
+                >
+                  <Plus className="h-4 w-4 mr-1" />
+                  Add Person
+                </Button>
+              </div>
+              
+              {formData.people.map((person, index) => (
+                <div key={index} className="border rounded-lg p-4 space-y-3 bg-gray-50 dark:bg-gray-800/50">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Person {index + 1}</span>
+                    {formData.people.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            people: prev.people.filter((_, i) => i !== index)
+                          }));
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                  
+                  <div className="grid gap-3 md:grid-cols-3">
+                    <div className="space-y-1">
+                      <Label className="text-xs">Name</Label>
+                      <Input
+                        placeholder="John Doe"
+                        value={person.name}
+                        onChange={(e) => {
+                          const newPeople = [...formData.people];
+                          newPeople[index] = { ...person, name: e.target.value };
+                          setFormData(prev => ({ ...prev, people: newPeople }));
+                        }}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs">Role</Label>
+                      <Select
+                        value={person.role}
+                        onValueChange={(v) => {
+                          const newPeople = [...formData.people];
+                          newPeople[index] = { ...person, role: v };
+                          setFormData(prev => ({ ...prev, people: newPeople }));
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="host">Host</SelectItem>
+                          <SelectItem value="co-host">Co-host</SelectItem>
+                          <SelectItem value="guest">Guest</SelectItem>
+                          <SelectItem value="producer">Producer</SelectItem>
+                          <SelectItem value="editor">Editor</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs">Group</Label>
+                      <Select
+                        value={person.group}
+                        onValueChange={(v: 'cast' | 'crew') => {
+                          const newPeople = [...formData.people];
+                          newPeople[index] = { ...person, group: v };
+                          setFormData(prev => ({ ...prev, people: newPeople }));
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="cast">Cast (on-air)</SelectItem>
+                          <SelectItem value="crew">Crew (behind scenes)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <div className="space-y-1">
+                      <Label className="text-xs">Photo URL (optional)</Label>
+                      <Input
+                        placeholder="https://example.com/photo.jpg"
+                        value={person.img || ''}
+                        onChange={(e) => {
+                          const newPeople = [...formData.people];
+                          newPeople[index] = { ...person, img: e.target.value || undefined };
+                          setFormData(prev => ({ ...prev, people: newPeople }));
+                        }}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs">Website URL (optional)</Label>
+                      <Input
+                        placeholder="https://example.com"
+                        value={person.href || ''}
+                        onChange={(e) => {
+                          const newPeople = [...formData.people];
+                          newPeople[index] = { ...person, href: e.target.value || undefined };
+                          setFormData(prev => ({ ...prev, people: newPeople }));
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
