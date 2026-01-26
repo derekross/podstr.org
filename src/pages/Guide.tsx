@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download, Settings, Rocket, CheckCircle, AlertCircle, Copy, BookOpen, Github, MessageSquare, Users, Shield, Zap, Play, Terminal } from 'lucide-react';
+import { Settings, Rocket, CheckCircle, AlertCircle, Copy, BookOpen, Github, MessageSquare, Users, Shield, Zap, Terminal, Sparkles, Wand2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Navigation } from '@/components/Navigation';
 import { useState } from 'react';
@@ -25,7 +25,92 @@ const Guide = () => {
     setTimeout(() => setCopiedCommand(null), 2000);
   };
 
-  const installationSteps = [
+  const shakespeareSteps = [
+    {
+      title: 'Fork the Repository',
+      content: (
+        <div className="space-y-4">
+          <p>First, fork the Podstr repository to your GitHub account:</p>
+          <div className="flex justify-center">
+            <Button size="lg" asChild>
+              <a href="https://github.com/derekross/podstr/fork" target="_blank" rel="noopener noreferrer">
+                <Github className="mr-2 h-5 w-5" />
+                Fork on GitHub
+              </a>
+            </Button>
+          </div>
+          <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+            <p className="text-sm text-blue-800 dark:text-blue-200">
+              <strong>Tip:</strong> Make sure you're logged into GitHub before forking. This creates your own copy of Podstr that you can customize.
+            </p>
+          </div>
+        </div>
+      )
+    },
+    {
+      title: 'Build Your Configuration Prompt',
+      content: (
+        <div className="space-y-4">
+          <p>Use our interactive Prompt Builder to create your configuration:</p>
+          <div className="flex justify-center">
+            <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" asChild>
+              <Link to="/prompt-builder">
+                <Wand2 className="mr-2 h-5 w-5" />
+                Open Prompt Builder
+              </Link>
+            </Button>
+          </div>
+          <p className="text-center text-gray-600 dark:text-gray-300">
+            Answer a few questions about your podcast and get a ready-to-use prompt.
+          </p>
+        </div>
+      )
+    },
+    {
+      title: 'Open in Shakespeare.diy',
+      content: (
+        <div className="space-y-4">
+          <p>Open your forked repository in Shakespeare.diy:</p>
+          <div className="flex justify-center">
+            <Button size="lg" variant="outline" asChild>
+              <a href="https://shakespeare.diy" target="_blank" rel="noopener noreferrer">
+                <Sparkles className="mr-2 h-5 w-5" />
+                Open Shakespeare.diy
+              </a>
+            </Button>
+          </div>
+          <ol className="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-300 mt-4">
+            <li>Go to Shakespeare.diy</li>
+            <li>Connect your GitHub account</li>
+            <li>Select your forked podstr repository</li>
+            <li>Make sure you're on the <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">podstr-2.0</code> branch</li>
+          </ol>
+        </div>
+      )
+    },
+    {
+      title: 'Paste Your Prompt',
+      content: (
+        <div className="space-y-4">
+          <p>Paste the prompt from the Prompt Builder into Shakespeare:</p>
+          <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
+            <li>Shakespeare will read your configuration request</li>
+            <li>It will edit <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">src/lib/podcastConfig.ts</code> with your settings</li>
+            <li>Review the changes and approve them</li>
+            <li>Shakespeare will commit the changes to your repository</li>
+          </ul>
+          <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+            <p className="text-sm text-green-800 dark:text-green-200">
+              <CheckCircle className="h-4 w-4 inline mr-2" />
+              <strong>That's it!</strong> Your podcast configuration is complete. Now you just need to deploy!
+            </p>
+          </div>
+        </div>
+      )
+    }
+  ];
+
+  const manualSteps = [
     {
       title: 'Prerequisites',
       content: (
@@ -49,39 +134,36 @@ const Guide = () => {
       title: 'Clone the Repository',
       content: (
         <div className="space-y-4">
-          <p>First, clone the Podstr repository from GitHub:</p>
+          <p>Clone your forked Podstr repository:</p>
           <div className="relative">
             <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto whitespace-pre-wrap break-words">
-              <code>git clone https://github.com/derekross/podstr.git</code>
+              <code>git clone https://github.com/YOUR-USERNAME/podstr.git</code>
             </pre>
             <Button
               variant="ghost"
               size="sm"
               className="absolute top-2 right-2 text-gray-400 hover:text-white"
-              onClick={() => copyToClipboard('git clone https://github.com/derekross/podstr.git')}
+              onClick={() => copyToClipboard('git clone https://github.com/YOUR-USERNAME/podstr.git')}
             >
               <Copy className="h-4 w-4" />
             </Button>
-            {copiedCommand === 'git clone https://github.com/derekross/podstr.git' && (
+            {copiedCommand === 'git clone https://github.com/YOUR-USERNAME/podstr.git' && (
               <span className="absolute top-2 right-12 text-green-400 text-sm">Copied!</span>
             )}
           </div>
-          <p>Then navigate into the project directory:</p>
+          <p>Navigate into the project and checkout the 2.0 branch:</p>
           <div className="relative">
             <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto whitespace-pre-wrap break-words">
-              <code>cd podstr</code>
+              <code>cd podstr && git checkout podstr-2.0</code>
             </pre>
             <Button
               variant="ghost"
               size="sm"
               className="absolute top-2 right-2 text-gray-400 hover:text-white"
-              onClick={() => copyToClipboard('cd podstr')}
+              onClick={() => copyToClipboard('cd podstr && git checkout podstr-2.0')}
             >
               <Copy className="h-4 w-4" />
             </Button>
-            {copiedCommand === 'cd podstr' && (
-              <span className="absolute top-2 right-12 text-green-400 text-sm">Copied!</span>
-            )}
           </div>
         </div>
       )
@@ -112,226 +194,51 @@ const Guide = () => {
       )
     },
     {
-      title: 'Environment Configuration',
+      title: 'Edit Configuration',
       content: (
         <div className="space-y-4">
-          <p>Create a environment configuration file:</p>
-          <div className="relative">
-            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto whitespace-pre-wrap break-words">
-              <code>cp .env.example .env</code>
-            </pre>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="absolute top-2 right-2 text-gray-400 hover:text-white"
-              onClick={() => copyToClipboard('cp .env.example .env')}
-            >
-              <Copy className="h-4 w-4" />
-            </Button>
-            {copiedCommand === 'cp .env.example .env' && (
-              <span className="absolute top-2 right-12 text-green-400 text-sm">Copied!</span>
-            )}
-          </div>
-          <p>Edit the <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">.env</code> file to configure your podcast settings:</p>
-          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg max-h-96 overflow-y-auto">
+          <p>Open <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">src/lib/podcastConfig.ts</code> in your editor:</p>
+          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg max-h-80 overflow-y-auto">
             <pre className="text-sm whitespace-pre-wrap break-all">
-              <code>{`# PODSTR Podcast Configuration
-# Copy this file to .env and customize the values for your podcast
+              <code>{`export const PODCAST_CONFIG: PodcastConfig = {
+  // ===========================================================================
+  // CREATOR IDENTITY
+  // ===========================================================================
+  // Your Nostr public key in npub format
+  creatorNpub: "npub1your_npub_here...",
 
-# =============================================================================
-# CREATOR CONFIGURATION
-# =============================================================================
-# Your Nostr public key in npub format - this identifies you as the podcast creator
-VITE_CREATOR_NPUB=npub1km5prrxcgt5fwgjzjpltyswsuu7u7jcj2cx9hk2rwvxyk00v2jqsgv0a3h
-
-# =============================================================================
-# BASIC PODCAST INFORMATION
-# =============================================================================
-# The name of your podcast
-VITE_PODCAST_TITLE=PODSTR Podcast
-
-# A description of your podcast content
-VITE_PODCAST_DESCRIPTION=A Nostr-powered podcast exploring decentralized conversations
-
-# Your name as podcast author/host
-VITE_PODCAST_AUTHOR=PODSTR Creator
-
-# Contact email for your podcast
-VITE_PODCAST_EMAIL=creator@podstr.example
-
-# URL to your podcast cover art image (minimum 1400x1400 pixels recommended)
-VITE_PODCAST_IMAGE=https://example.com/podcast-artwork.jpg
-
-# Language code for your podcast (e.g., en-us, es-es, fr-fr)
-VITE_PODCAST_LANGUAGE=en-us
-
-# Podcast categories separated by commas
-VITE_PODCAST_CATEGORIES=Technology,Social Networking,Society & Culture
-
-# Whether your podcast contains explicit content (true/false)
-VITE_PODCAST_EXPLICIT=false
-
-# Your podcast website URL
-VITE_PODCAST_WEBSITE=https://podstr.example
-
-# =============================================================================
-# PODCASTING 2.0 METADATA
-# =============================================================================
-# Unique identifier for your podcast (can be your npub)
-VITE_PODCAST_GUID=npub1km5prrxcgt5fwgjzjpltyswsuu7u7jcj2cx9hk2rwvxyk00v2jqsgv0a3h
-
-# Type of podcast content
-VITE_PODCAST_MEDIUM=podcast
-
-# Publisher name (can be same as author)
-VITE_PODCAST_PUBLISHER=PODSTR Creator
-
-# Podcast type: episodic or serial
-VITE_PODCAST_TYPE=episodic
-
-# =============================================================================
-# LIGHTNING VALUE FOR VALUE
-# =============================================================================
-# Suggested value amount per minute (in sats)
-VITE_PODCAST_VALUE_AMOUNT=1000
-
-# Currency type (sats, USD, EUR, BTC)
-VITE_PODCAST_VALUE_CURRENCY=sats
-
-# Value recipients as JSON array (broken into multiple lines for readability)
-VITE_PODCAST_VALUE_RECIPIENTS=[
-  {
-    "name":"Podcast Host",
-    "type":"node",
-    "address":"030a58b8653d32b99200a2334cfe913e51dc7d155aa0116c176657a4f1722677a3",
-    "split":80,
-    "fee":false
-  },
-  {
-    "name":"Producer",
-    "type":"lightning-address",
-    "address":"producer@getalby.com",
-    "split":15,
-    "fee":false,
-    "customKey":"podcast",
-    "customValue":"producer-fee"
-  },
-  {
-    "name":"Platform Fee",
-    "type":"node",
-    "address":"021f2f8e1e46a48d0a9f1b7e4e8b5c8d5e4f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6",
-    "split":5,
-    "fee":true
+  podcast: {
+    // =========================================================================
+    // BASIC PODCAST INFO
+    // =========================================================================
+    title: "Your Podcast Name",
+    description: "Your podcast description",
+    author: "Your Name",
+    email: "you@example.com",
+    image: "https://your-cover-art.jpg",
+    language: "en-us",
+    categories: ["Technology"],
+    explicit: false,
+    website: "https://yourpodcast.com",
+    copyright: "© 2025 Your Name",
+    
+    // ... more settings
   }
-]`}</code>
+};`}</code>
             </pre>
           </div>
           <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
             <p className="text-sm text-blue-800 dark:text-blue-200">
-              <strong>Key Configuration Options:</strong>
+              <strong>Key Settings:</strong>
             </p>
             <ul className="mt-2 space-y-1 text-sm text-blue-700 dark:text-blue-300">
-              <li><strong>VITE_CREATOR_NPUB:</strong> Your Nostr public key identifier (safe to share)</li>
-              <li><strong>VITE_PODCAST_TITLE:</strong> Your podcast name</li>
-              <li><strong>VITE_PODCAST_DESCRIPTION:</strong> Podcast description</li>
-              <li><strong>VITE_PODCAST_AUTHOR:</strong> Your name as host</li>
-              <li><strong>VITE_PODCAST_IMAGE:</strong> Cover art URL (1400x1400px min)</li>
-              <li><strong>VITE_PODCAST_CATEGORIES:</strong> Podcast categories</li>
-              <li><strong>VITE_PODCAST_VALUE_AMOUNT:</strong> Suggested sat value per minute</li>
-              <li><strong>VITE_PODCAST_VALUE_RECIPIENTS:</strong> Value split configuration</li>
+              <li><strong>creatorNpub:</strong> Your Nostr public key (npub1...)</li>
+              <li><strong>title:</strong> Your podcast name</li>
+              <li><strong>description:</strong> Podcast description</li>
+              <li><strong>author:</strong> Your name as host</li>
+              <li><strong>image:</strong> Cover art URL (1400x1400px min)</li>
+              <li><strong>value.recipients:</strong> Lightning payment configuration</li>
             </ul>
-          </div>
-        </div>
-      )
-    }
-  ];
-
-  const configurationSteps = [
-    {
-      title: 'Creator & Basic Info',
-      content: (
-        <div className="space-y-4">
-          <p>Configure your creator identity and basic podcast information:</p>
-          <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-            <li><strong>Creator NPUB:</strong> Your Nostr public key that identifies you as the podcast creator</li>
-            <li><strong>Podcast Title:</strong> The name of your podcast</li>
-            <li><strong>Podcast Description:</strong> A detailed description of your podcast content</li>
-            <li><strong>Author:</strong> Your name as the podcast host/creator</li>
-            <li><strong>Email:</strong> Contact email for your podcast</li>
-            <li><strong>Cover Art:</strong> URL to your podcast artwork (1400x1400px recommended)</li>
-            <li><strong>Categories:</strong> Podcast categories separated by commas</li>
-          </ul>
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg">
-            <p className="text-sm text-yellow-800 dark:text-yellow-200">
-              <AlertCircle className="h-4 w-4 inline mr-2" />
-              <strong>Important:</strong> Your NSEC (private key) should be kept secure and never shared. Your NPUB is your public identifier that can be safely shared.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: 'Podcasting 2.0 Settings',
-      content: (
-        <div className="space-y-4">
-          <p>Configure your Podcasting 2.0 and metadata settings:</p>
-          <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-            <li><strong>GUID:</strong> Unique identifier for your podcast (can be your NPUB)</li>
-            <li><strong>Medium:</strong> Type of content (typically "podcast")</li>
-            <li><strong>Publisher:</strong> Podcast publisher name</li>
-            <li><strong>Type:</strong> Podcast format (episodic or serial)</li>
-            <li><strong>Complete:</strong> Whether podcast is finished (true/false)</li>
-            <li><strong>Locked:</strong> Whether podcast is premium content (true/false)</li>
-            <li><strong>Language:</strong> Language code (e.g., en-us, es-es, fr-fr)</li>
-            <li><strong>Explicit:</strong> Whether content contains explicit material</li>
-          </ul>
-          <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-            <p className="text-sm text-green-800 dark:text-green-200">
-              <CheckCircle className="h-4 w-4 inline mr-2" />
-              <strong>Pro Tip:</strong> These Podcasting 2.0 settings help your podcast get discovered across the broader podcasting ecosystem.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: 'Value for Value & Monetization',
-      content: (
-        <div className="space-y-4">
-          <p>Configure your Lightning Network and value-for-value settings:</p>
-          <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-            <li><strong>Value Amount:</strong> Suggested sat value per minute</li>
-            <li><strong>Currency:</strong> Currency type (sats, USD, EUR, BTC)</li>
-            <li><strong>Value Recipients:</strong> JSON array for splitting payments</li>
-            <li><strong>Funding Links:</strong> Lightning addresses and donation links</li>
-            <li><strong>License:</strong> Content license (e.g., CC BY 4.0, All Rights Reserved)</li>
-          </ul>
-          <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-            <p className="text-sm text-green-800 dark:text-green-200">
-              <CheckCircle className="h-4 w-4 inline mr-2" />
-              <strong>Pro Tip:</strong> The value recipients array allows you to split payments between host, producer, and platform fees automatically.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: 'Advanced Settings',
-      content: (
-        <div className="space-y-4">
-          <p>Configure advanced podcast settings and metadata:</p>
-          <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-            <li><strong>Location:</strong> Recording location (name, GPS, OpenStreetMap)</li>
-            <li><strong>Person Metadata:</strong> People involved in podcast (host, guest, producer)</li>
-            <li><strong>Text Metadata:</strong> Verification text and custom metadata</li>
-            <li><strong>Remote Items:</strong> References to remote feed content</li>
-            <li><strong>Content Blocking:</strong> Platform-specific blocking settings</li>
-            <li><strong>Feed Migration:</strong> New feed URL for podcast migration</li>
-          </ul>
-          <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-            <p className="text-sm text-blue-800 dark:text-blue-200">
-              <strong>Note:</strong> These advanced settings are optional but can enhance your podcast's discoverability and metadata richness.
-            </p>
           </div>
         </div>
       )
@@ -344,9 +251,8 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
       icon: '🚀',
       description: 'Easy deployment with automatic SSL and CDN',
       steps: [
-        'Push your code to GitHub',
+        'Push your changes to GitHub',
         'Connect your GitHub repository to Vercel',
-        'Configure environment variables in Vercel dashboard',
         'Deploy with one click'
       ],
       command: 'npm run build',
@@ -358,25 +264,12 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
       description: 'Simple static site deployment with continuous deployment',
       steps: [
         'Create a Netlify account',
-        'Drag and drop your build folder or connect GitHub',
-        'Set up build command: npm run build',
-        'Configure environment variables'
+        'Connect your GitHub repository',
+        'Set build command: npm run build',
+        'Deploy automatically on push'
       ],
       command: 'npm run build',
-      notes: 'Great for static sites with serverless functions for dynamic features'
-    },
-    {
-      title: 'Self-Hosted',
-      icon: '🏠',
-      description: 'Full control over your deployment and infrastructure',
-      steps: [
-        'Set up a server with Node.js',
-        'Install PM2 for process management',
-        'Configure your web server (Nginx/Apache)',
-        'Set up SSL certificates with Let\'s Encrypt'
-      ],
-      command: 'npm run build && npm start',
-      notes: 'Requires more technical knowledge but provides maximum control'
+      notes: 'Great for static sites with serverless functions'
     },
     {
       title: 'GitHub Pages',
@@ -385,12 +278,24 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
       steps: [
         'Push your code to GitHub',
         'Go to repository Settings > Pages',
-        'Select your branch (usually main or gh-pages)',
-        'Choose your site folder (usually /dist)',
-        'Save and your site will be live at https://yourusername.github.io/podstr'
+        'Select your branch (usually main)',
+        'Your site will be live at https://yourusername.github.io/podstr'
       ],
       command: 'npm run build',
-      notes: 'Perfect for free hosting of static sites with GitHub integration'
+      notes: 'Perfect for free hosting with GitHub integration'
+    },
+    {
+      title: 'Self-Hosted',
+      icon: '🏠',
+      description: 'Full control over your deployment and infrastructure',
+      steps: [
+        'Set up a server with Node.js',
+        'Clone your repository',
+        'Run npm run build',
+        'Serve the dist folder with nginx or similar'
+      ],
+      command: 'npm run build',
+      notes: 'Maximum control but requires more technical knowledge'
     }
   ];
 
@@ -411,16 +316,16 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
             Build Your Podcast Community
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-            Follow our step-by-step guide to deploy your own decentralized podcast platform. Get up and running in about 15 minutes.
+            Choose between AI-assisted configuration with Shakespeare.diy or manual setup. Either way, you'll be up and running in minutes.
           </p>
           <div className="flex justify-center space-x-8 text-sm text-gray-600 dark:text-gray-400">
             <div className="flex items-center">
               <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-              15 minute setup
+              5 minute setup
             </div>
             <div className="flex items-center">
               <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-              No technical expertise required
+              No coding required
             </div>
             <div className="flex items-center">
               <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
@@ -430,8 +335,59 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* Quick Start with Shakespeare */}
       <section className="py-16 bg-white dark:bg-gray-800">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge variant="secondary" className="mb-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white border-0">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Recommended
+            </Badge>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              Quick Start with Shakespeare.diy
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              The fastest way to configure your podcast - let AI do the work!
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" asChild>
+              <Link to="/prompt-builder">
+                <Wand2 className="mr-2 h-5 w-5" />
+                Start Prompt Builder
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <a href="https://shakespeare.diy" target="_blank" rel="noopener noreferrer">
+                <Sparkles className="mr-2 h-5 w-5" />
+                Open Shakespeare.diy
+              </a>
+            </Button>
+          </div>
+
+          <div className="grid gap-6">
+            {shakespeareSteps.map((step, index) => (
+              <Card key={index} className="border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <span className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                      {index + 1}
+                    </span>
+                    <span>{step.title}</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {step.content}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
             What You'll Build
@@ -462,65 +418,21 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
         </div>
       </section>
 
-      {/* Guide Content */}
+      {/* Detailed Guide Tabs */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <Tabs defaultValue="installation" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="installation" className="flex items-center space-x-2">
-                <Download className="h-4 w-4" />
-                <span>Installation</span>
-              </TabsTrigger>
-              <TabsTrigger value="configuration" className="flex items-center space-x-2">
-                <Settings className="h-4 w-4" />
-                <span>Configuration</span>
-              </TabsTrigger>
+          <Tabs defaultValue="deployment" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="deployment" className="flex items-center space-x-2">
                 <Rocket className="h-4 w-4" />
                 <span>Deployment</span>
               </TabsTrigger>
+              <TabsTrigger value="manual" className="flex items-center space-x-2">
+                <Settings className="h-4 w-4" />
+                <span>Manual Setup</span>
+              </TabsTrigger>
             </TabsList>
-
-            <TabsContent value="installation" className="mt-8">
-              <div className="grid gap-6">
-                {installationSteps.map((step, index) => (
-                  <Card key={index} className="border-0 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="flex items-center space-x-2">
-                        <span className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                          {index + 1}
-                        </span>
-                        <span>{step.title}</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      {step.content}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="configuration" className="mt-8">
-              <div className="grid gap-6">
-                {configurationSteps.map((step, index) => (
-                  <Card key={index} className="border-0 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="flex items-center space-x-2">
-                        <span className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                          {index + 1}
-                        </span>
-                        <span>{step.title}</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      {step.content}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
 
             <TabsContent value="deployment" className="mt-8">
               <div className="grid md:grid-cols-2 gap-6">
@@ -538,7 +450,7 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
                       {option.title === 'Vercel (Recommended)' && (
                         <div className="flex justify-center pb-2">
                           <a
-                            href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr"
+                            href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr&branch=podstr-2.0"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -554,7 +466,7 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
                       {option.title === 'Netlify' && (
                         <div className="flex justify-center pb-2">
                           <a
-                            href="https://app.netlify.com/start/deploy?repository=https://github.com/derekross/podstr"
+                            href="https://app.netlify.com/start/deploy?repository=https://github.com/derekross/podstr#podstr-2.0"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -603,6 +515,32 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
                 ))}
               </div>
             </TabsContent>
+
+            <TabsContent value="manual" className="mt-8">
+              <div className="mb-6 bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg">
+                <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                  <AlertCircle className="h-4 w-4 inline mr-2" />
+                  <strong>Prefer the easy way?</strong> Use our <Link to="/prompt-builder" className="underline">Prompt Builder</Link> with Shakespeare.diy instead!
+                </p>
+              </div>
+              <div className="grid gap-6">
+                {manualSteps.map((step, index) => (
+                  <Card key={index} className="border-0 shadow-lg">
+                    <CardHeader>
+                      <CardTitle className="flex items-center space-x-2">
+                        <span className="w-8 h-8 bg-gray-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                          {index + 1}
+                        </span>
+                        <span>{step.title}</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      {step.content}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
           </Tabs>
 
           {/* Next Steps */}
@@ -622,10 +560,10 @@ VITE_PODCAST_VALUE_RECIPIENTS=[
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
                   <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" asChild>
-                    <a href="https://github.com/derekross/podstr" target="_blank" rel="noopener noreferrer">
-                      <Play className="mr-2 h-5 w-5" />
-                      Get Started Now
-                    </a>
+                    <Link to="/prompt-builder">
+                      <Wand2 className="mr-2 h-5 w-5" />
+                      Start Prompt Builder
+                    </Link>
                   </Button>
                   <Button variant="outline" size="lg" className="border-2" asChild>
                     <Link to="/faq">

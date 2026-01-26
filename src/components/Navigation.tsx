@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
-import { ArrowLeft, BookOpen, Github, MessageSquare, Moon, Sun, Monitor } from 'lucide-react';
+import { ArrowLeft, BookOpen, Github, MessageSquare, Moon, Sun, Monitor, Sparkles, Wand2 } from 'lucide-react';
 
 interface NavigationProps {
   title: string;
@@ -86,6 +86,37 @@ export function Navigation({ title, showBackButton = true }: NavigationProps) {
                 )}
               </>
             )}
+
+            {/* Prompt Builder Link */}
+            <Button
+              variant="outline"
+              size="sm"
+              asChild
+              className="flex-shrink-0"
+              title="Build configuration prompt"
+            >
+              <Link to="/prompt-builder">
+                <Wand2 className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Prompt Builder</span>
+              </Link>
+            </Button>
+
+            {/* Edit with Shakespeare Button */}
+            <Button
+              size="sm"
+              asChild
+              className="flex-shrink-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+              title="Edit with Shakespeare.diy"
+            >
+              <a
+                href="https://shakespeare.diy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Sparkles className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Edit with Shakespeare</span>
+              </a>
+            </Button>
 
             {/* GitHub Link - Always visible */}
             <Button
