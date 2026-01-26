@@ -703,12 +703,12 @@ const PromptBuilder = () => {
               </Button>
               <Button variant="outline" size="lg" asChild>
                 <a
-                  href="https://shakespeare.diy"
+                  href="https://shakespeare.diy/clone?url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr.git"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <ExternalLink className="mr-2 h-5 w-5" />
-                  Open Shakespeare
+                  Open in Shakespeare
                 </a>
               </Button>
             </div>
@@ -727,8 +727,8 @@ const PromptBuilder = () => {
               </h4>
               <ol className="list-decimal list-inside space-y-1 text-sm text-purple-700 dark:text-purple-300">
                 <li>Fork the <a href="https://github.com/derekross/podstr" target="_blank" rel="noopener noreferrer" className="underline">Podstr repository</a> on GitHub</li>
-                <li>Open your fork in <a href="https://shakespeare.diy" target="_blank" rel="noopener noreferrer" className="underline">Shakespeare.diy</a></li>
-                <li>Paste the copied prompt above</li>
+                <li>Click "Open in Shakespeare" above to open your fork</li>
+                <li>Paste the copied prompt</li>
                 <li>Shakespeare will configure your podcast automatically!</li>
                 <li>Deploy to Vercel, Netlify, or GitHub Pages</li>
               </ol>

@@ -73,16 +73,15 @@ const Guide = () => {
           <p>Open your forked repository in Shakespeare.diy:</p>
           <div className="flex justify-center">
             <Button size="lg" variant="outline" asChild>
-              <a href="https://shakespeare.diy" target="_blank" rel="noopener noreferrer">
+              <a href="https://shakespeare.diy/clone?url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr.git" target="_blank" rel="noopener noreferrer">
                 <Sparkles className="mr-2 h-5 w-5" />
-                Open Shakespeare.diy
+                Open in Shakespeare
               </a>
             </Button>
           </div>
           <ol className="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-300 mt-4">
-            <li>Go to Shakespeare.diy</li>
-            <li>Connect your GitHub account</li>
-            <li>Select your forked podstr repository</li>
+            <li>Click the button above to open Podstr in Shakespeare</li>
+            <li>Connect your GitHub account if prompted</li>
             <li>Make sure you're on the <code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">podstr-2.0</code> branch</li>
           </ol>
         </div>
@@ -359,9 +358,9 @@ const Guide = () => {
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <a href="https://shakespeare.diy" target="_blank" rel="noopener noreferrer">
+              <a href="https://shakespeare.diy/clone?url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr.git" target="_blank" rel="noopener noreferrer">
                 <Sparkles className="mr-2 h-5 w-5" />
-                Open Shakespeare.diy
+                Open in Shakespeare
               </a>
             </Button>
           </div>

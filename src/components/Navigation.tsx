@@ -109,7 +109,7 @@ export function Navigation({ title, showBackButton = true }: NavigationProps) {
               title="Edit with Shakespeare.diy"
             >
               <a
-                href="https://shakespeare.diy"
+                href="https://shakespeare.diy/clone?url=https%3A%2F%2Fgithub.com%2Fderekross%2Fpodstr.git"
                 target="_blank"
                 rel="noopener noreferrer"
               >
