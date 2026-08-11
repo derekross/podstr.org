@@ -171,3 +171,7 @@ Join the conversation and connect with other sovereign podcasters:
 **For the sovereign podcaster who refuses to be deplatformed.**
 
 Built with ⚡ and 💜 for the decentralized future of podcasting.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 or later — see the [LICENSE](LICENSE) file for details.
